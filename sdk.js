@@ -191,10 +191,12 @@ function applyStyles() {
         }
         
         .btn--ok {
+            color: #fff;
             background-color: green;
         }
         
         .btn--err {
+            color: #fff;
             background-color: red;
         }
 
