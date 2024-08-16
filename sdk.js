@@ -63,6 +63,14 @@ function applyStyles() {
             justify-content: center;
             align-items: center;
         }
+        
+        .ad-content {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100vh;
+        }
         .btn-box {
             position: fixed;
             pointer-events: none;
@@ -108,16 +116,15 @@ function applyStyles() {
             text-align: center;
             font-size: 46px;
         }
+        
+        #ad-container {
+            z-index: 99999
+        }
     `;
 
     const style = document.createElement('style');
     style.type = 'text/css';
-
-    if (style.styleSheet) {
-        style.styleSheet.cssText = css; // Для IE
-    } else {
-        style.appendChild(document.createTextNode(css)); // Для остальных браузеров
-    }
+    style.appendChild(document.createTextNode(css)); // Для остальных браузеров
 
     document.head.appendChild(style);
 }
