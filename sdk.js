@@ -11,13 +11,20 @@ function addHtmlContainer() {
         <div class="opacity"></div>
         <div class="content">
             <div class="text">Подтвердите, что вам исполнилось 18 лет</div>
-            <div class="btn btn--ok" onclick="eventOk()">Подтверждаю</div>
-            <div class="btn btn--err" onclick="eventNo()">Не подтверждаю</div>
+            <div class="btn btn--ok">Подтверждаю</div>
+            <div class="btn btn--err">Не подтверждаю</div>
         </div>
     </div>
     `;
 
     document.body.appendChild(adContainer);
+}
+
+function removeHtmlContainer() {
+    const adContainer = document.getElementById('ad-container');
+    if (adContainer) {
+        adContainer.remove();
+    }
 }
 
 function loadScript(src) {
@@ -151,6 +158,7 @@ function applyStyles() {
             justify-content: center;
             align-items: center;
             pointer-events: none;
+            touch-action: none;
         }
         
         .opacity {
@@ -190,6 +198,10 @@ function applyStyles() {
             background-color: red;
         }
 
+        .videoAdUiLearnMore {
+            width: 100%;
+            height: 100vh;
+        }
     `;
 
 
@@ -215,14 +227,6 @@ async function fetchAdContent(adId) {
         throw new Error('Не удалось получить контент рекламы');
     }
 }
-
-const eventOk = () => {
-    console.log('ok');
-};
-
-const eventNo = () => {
-    console.log('no');
-};
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -262,19 +266,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         startVideo()
     };
 
-    const onAdStarted = () => {
-        setPlaybackRate = (rate) => adContainer.playbackRate = rate;
+    const onAdStarted = (event) => {
+        setPlaybackRate = function (rate) {
+            adContainer.querySelector('video').playbackRate = rate;
+        };
+
         pauseVideo = () => adsManager.pause();
         resumeVideo = () => adsManager.resume();
         setVolume = (volume) => adsManager.setVolume(volume);
     };
 
     const onAdComplete = () => {
-        // startVideo()
+        removeHtmlContainer()
+    };
+
+    const onAdClick = () => {
+        setPlaybackRate(10)
     };
 
     const onProgress = (event) => {
-        // pauseVideo()
     };
 
     const onAdsManagerLoaded = (adsManagerLoadedEvent) => {
@@ -291,6 +301,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         adsManager.addEventListener(google.ima.AdEvent.Type.STARTED, onAdStarted);
         adsManager.addEventListener(google.ima.AdEvent.Type.COMPLETE, onAdComplete);
         adsManager.addEventListener(google.ima.AdEvent.Type.AD_PROGRESS, onProgress);
+        adsManager.addEventListener(google.ima.AdEvent.Type.CLICK, onAdClick);
 
         adsManager.init(containerWidth, containerHeight, google.ima.ViewMode.NORMAL);
     };
@@ -311,8 +322,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // document.querySelector('.ads-box > div').style.transform = `scale(${window.innerWidth / 400},${window.innerHeight / 700})`;
 
-        document.querySelector('.btn--ok').addEventListener('click', eventOk);
-        document.querySelector('.btn--err').addEventListener('click', eventNo);
     } catch (error) {
         console.error('Ошибка при получении и отображении рекламы:', error);
     }
