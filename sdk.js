@@ -40,7 +40,7 @@ function loadScript(src) {
 }
 
 function applyStyles() {
-    const css = `
+    const css2 = `
         body {
             border: 0;
             margin: 0;
@@ -119,6 +119,79 @@ function applyStyles() {
             z-index: 99999
         }
     `;
+
+    const css = `
+        #ad-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+        }
+        
+        .ads-box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background-color: rgba(0, 0, 0, 0.5); /* Прозрачный фон */
+        }
+        
+        .btn-box {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+        }
+        
+        .opacity {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9); /* Прозрачный фон */
+        }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: #fff;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn--ok {
+            background-color: green;
+        }
+        
+        .btn--err {
+            background-color: red;
+        }
+
+    `;
+
 
     const style = document.createElement('style');
     style.type = 'text/css';
