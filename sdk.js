@@ -64,7 +64,7 @@ function applyStyles() {
             align-items: center;
         }
         
-        .ad-content {
+        #ad-content {
             position: fixed;
             left: 0;
             top: 0;
