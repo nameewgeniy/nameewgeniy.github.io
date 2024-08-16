@@ -4,9 +4,7 @@ function addHtmlContainer() {
 
     adContainer.innerHTML = `
     <div class="ads-box">
-        <div id="ad-content">
-            <div id="video-container" class="video-container"></div>
-        </div>
+        <div id="video-container" class="video-container"></div>
     </div>
     
     <div class="btn-box">
