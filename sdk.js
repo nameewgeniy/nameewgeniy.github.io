@@ -22,6 +22,11 @@ function addHtmlContainer() {
 
 function applyStyles() {
     const css = `
+    
+        #ssp-banner-container {
+            height: 100%;
+        }
+        
         #ssp-ad-container {
             position: fixed;
             top: 0;
@@ -146,11 +151,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const adContent = await fetchAdContent(adId);
 
+        // Создаем Blob с HTML-содержимым
+        const blob = new Blob([adContent], { type: 'text/html' });
+        const blobURL = URL.createObjectURL(blob);
+
+        // Создаем iframe с атрибутом srcdoc
+        const iframe = document.createElement('iframe');
+        iframe.src = blobURL; // Используем свойство srcdoc
+        iframe.width = "100%"; // Задайте нужные размеры
+        iframe.height = "100%"; // Задайте нужные размеры
+        iframe.style.border = "none"; // Убираем рамку
+
         // Добавление контента рекламы в banner-container
         const bannerContainer = document.getElementById('ssp-banner-container');
-        bannerContainer.innerHTML = adContent;  // Вставляем полученный контент
+        // Добавляем iframe в контейнер
+        bannerContainer.appendChild(iframe);
 
-        document.querySelector('.ssp-ads-box > div').style.transform = `scale(${window.innerWidth / 400},${window.innerHeight / 700})`;
+        // document.querySelector('.ssp-ads-box > div').style.transform = `scale(${window.innerWidth / 400},${window.innerHeight / 700})`;
+        document.querySelector('.ssp-ads-box > div > iframe').style.transform = `scale(${window.innerWidth / 400},${window.innerHeight / 700})`;
 
     } catch (error) {
         console.error('Ошибка при получении и отображении рекламы:', error);
