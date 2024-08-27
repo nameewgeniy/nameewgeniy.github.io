@@ -123,7 +123,7 @@ async function fetchAdContent(adId) {
 
 async function fetchAdContentFromSSP(adId) {
     const response = await fetch(`https://bid.sspnet.tech/rtb/adm/${adId}`);
-    return await response.json();
+    return await response.text();
 }
 
 async function fetchAdContentFromFake(adId) {
